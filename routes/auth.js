@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 
 // Creamos un esquema de registro usando las validaciones de Joi 
 const schemaRegister = Joi.object({
+    name: Joi.string().min(6).max(255).required(),
 	email: Joi.string().min(6).max(255).required().email(),
 	password: Joi.string().min(6).max(1024).required()
 })
@@ -37,6 +38,7 @@ router.post('/register', async (req, res) => {
 
     // Creamos el objeto usando el model que creaos anteriormente
     const user = new User({
+        name: req.body.name,
         email: req.body.email,
         password: password
     });
@@ -82,6 +84,7 @@ router.post('/login', async (req, res) => {
 	res.header('auth-token', token).json({
 		error: null,
 		data: { token },
+        userId: user._id,
 		message: 'Bienvenido'
 	})
 })

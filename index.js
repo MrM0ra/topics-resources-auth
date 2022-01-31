@@ -17,6 +17,14 @@ mongoose
 
 const app = express()
 
+// Creamos la variable de configuración
+let corsOptions = {
+    origin: 'http://localhost:3000', // Aqui debemos reemplazar el * por el dominio de nuestro front
+    optionsSuccessStatus: 200 // Es necesario para navegadores antiguos o algunos SmartTVs
+}
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -30,10 +38,3 @@ const PORT = process.env.PORT || 8002
 app.listen(PORT, () => {
     console.log(`Tu servidor está corriendo en el puerto: ${PORT}`)
 })
-
-// Creamos la variable de configuración
-var corsOptions = {
-    origin: '*', // Aqui debemos reemplazar el * por el dominio de nuestro front
-    optionsSuccessStatus: 200 // Es necesario para navegadores antiguos o algunos SmartTVs
-}
-app.use(cors(corsOptions));
